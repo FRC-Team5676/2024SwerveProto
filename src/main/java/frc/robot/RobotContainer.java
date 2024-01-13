@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.controllers.joystick;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.utils.AutonManager;
 import frc.robot.commands.swerve.TeleopSwerveCommand;
@@ -31,13 +27,10 @@ public class RobotContainer {
   private final AutonManager autonManager = new AutonManager();
 
   // The driver's controller
-  private final joystick driver = new joystick(0);
+  private final CommandJoystick driver = new CommandJoystick(0);
 
   // The robot's subsystems
   private final SwerveDrive swerve = new SwerveDrive();
-
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,7 +49,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 
   private void addAutonomousChoices() {
@@ -85,11 +78,11 @@ public class RobotContainer {
     swerve.setDefaultCommand(
         new TeleopSwerveCommand(
             swerve,
-            () -> driver.getStickY(),
-            () -> driver.getStickX(),
-            () -> driver.getStickZ()));
+            () -> driver.getY(),
+            () -> driver.getX(),
+            () -> driver.getZ()));
 
-    driver.button1.onTrue(new InstantCommand(swerve::toggleFieldRelative));
-    driver.button2.onTrue(new InstantCommand(swerve::zeroGyro));
+    driver.button(1).onTrue(new InstantCommand(swerve::toggleFieldRelative));
+    driver.button(2).onTrue(new InstantCommand(swerve::zeroGyro));
   }
 }
