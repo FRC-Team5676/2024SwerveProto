@@ -6,15 +6,13 @@ package frc.robot.utils;
 
 import java.util.Map;
 
-import com.ctre.phoenix.sensors.CANCoderFaults;
-
+import com.ctre.phoenix6.StatusSignal;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.constants.ModuleConstants;
 import frc.robot.subsystems.SwerveDrive;
-//import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SwerveModule;
 
 /** Add your docs here. */
@@ -64,14 +62,13 @@ public class ShuffleboardContent {
                                 .getLayout(turnLayout, BuiltInLayouts.kList).withPosition(moduleNumber * 2, 2)
                                 .withSize(2, 3).withProperties(Map.of("Label position", "LEFT"));
 
-                if (sm.m_state != null)
-                {
+                if (sm.m_state != null) {
                         tuLayout.addNumber("Turn Setpoint Deg " + abrev, () -> sm.m_state.angle.getDegrees());
                 }
                 tuLayout.addNumber("Turn Enc Pos " + abrev, () -> sm.m_turnEncoder.getPosition() % 360);
                 tuLayout.addNumber("Act Ang Deg " + abrev, () -> sm.m_turnEncoder.getPosition());
                 tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnMotor.getAppliedOutput());
-                tuLayout.addNumber("Abs Position" + abrev, () -> sm.m_turnCANcoder.getPosition());
+                tuLayout.addNumber("Abs Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
                 tuLayout.addNumber("Current Amps" + abrev, () -> sm.m_turnMotor.getOutputCurrent());
                 tuLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffset);
                 tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnMotor.getFirmwareVersion());
@@ -85,9 +82,8 @@ public class ShuffleboardContent {
                 x.addBoolean("CANCoder Connected" + abrev, () -> sm.m_turnCoderConnected)
                                 .withPosition(8, moduleNumber * 2);
 
-                CANCoderFaults faults = new CANCoderFaults();
-                sm.m_turnCANcoder.getFaults(faults);
-                x.addBoolean("CANCoder Faults" + abrev, () -> !faults.hasAnyFault())
+                StatusSignal<Integer> faults = sm.m_turnCANcoder.getFaultField();
+                x.addBoolean("CANCoder Faults" + abrev, () -> 0 != faults.getValue())
                                 .withPosition(9, moduleNumber * 2);
 
         }
@@ -101,13 +97,11 @@ public class ShuffleboardContent {
                                 .getLayout(canCoderLayout, BuiltInLayouts.kList).withPosition(moduleNumber * 2, 0)
                                 .withSize(2, 3).withProperties(Map.of("Label position", "LEFT"));
 
-                coderLayout.addNumber("Abs Position" + abrev, () -> sm.m_turnCANcoder.getAbsolutePosition());
+                coderLayout.addNumber("Abs Position" + abrev,
+                                () -> sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble());
                 coderLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffset);
-                coderLayout.addNumber("Position" + abrev, () -> sm.m_turnCANcoder.getPosition());
-                coderLayout.addNumber("Velocity" + abrev, () -> sm.m_turnCANcoder.getVelocity());
-                coderLayout.addString("MagField" + abrev, () -> sm.m_turnCANcoder.getMagnetFieldStrength().toString());
-                coderLayout.addNumber("Bus Volts" + abrev, () -> sm.m_turnCANcoder.getBusVoltage());
-                coderLayout.addNumber("Firmware#" + abrev, () -> sm.m_turnCANcoder.getFirmwareVersion());
+                coderLayout.addNumber("Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
+                coderLayout.addNumber("Velocity" + abrev, () -> sm.m_turnCANcoder.getVelocity().getValueAsDouble());
         }
 
         public static void initGyro(SwerveDrive sd) {
