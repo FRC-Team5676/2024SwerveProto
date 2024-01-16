@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ModuleConstants;
@@ -97,8 +98,11 @@ public class SwerveModule extends SubsystemBase {
 
     public void setDesiredState(SwerveModuleState desiredState) {
 
+        // Optimize state
+        var desiredStateOptimized = SwerveModuleState.optimize(desiredState, new Rotation2d(m_turnEncoder.getPosition()));
+
         // Save State
-        m_state = desiredState;
+        m_state = desiredStateOptimized;
 
         // Set Position
         m_turnPosController.setReference(m_state.angle.getDegrees(), CANSparkMax.ControlType.kPosition);
@@ -108,7 +112,7 @@ public class SwerveModule extends SubsystemBase {
     private boolean checkCAN() {
         m_driveMotorConnected = m_driveMotor.getFirmwareVersion() != 0;
         m_turnMotorConnected = m_turnMotor.getFirmwareVersion() != 0;
-        m_turnCoderConnected = m_turnCANcoder.getDeviceID() > 0;
+        m_turnCoderConnected = m_turnCANcoder.getDeviceID() != 0;
 
         return m_driveMotorConnected && m_turnMotorConnected && m_turnCoderConnected;
     }
