@@ -1,14 +1,11 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import com.ctre.phoenix.sensors.SensorTimeBase;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +17,7 @@ public class SwerveModule extends SubsystemBase {
     public final CANSparkMax m_driveMotor;
     public final CANSparkMax m_turnMotor;
     public final RelativeEncoder m_driveEncoder;
-    public final CANCoder m_turnCANcoder;
+    public final CANcoder m_turnCANcoder;
     public final RelativeEncoder m_turnEncoder;
     public final double m_turnEncoderOffset;
     public final ModulePosition m_modulePosition;
@@ -30,8 +27,8 @@ public class SwerveModule extends SubsystemBase {
     public boolean m_turnCoderConnected;
     public SwerveModuleState m_state;
 
-    private final SparkMaxPIDController m_driveVelController;
-    private final SparkMaxPIDController m_turnPosController;
+    private final SparkPIDController m_driveVelController;
+    private final SparkPIDController m_turnPosController;
 
     public SwerveModule(
             ModulePosition modulePosition,
@@ -66,15 +63,14 @@ public class SwerveModule extends SubsystemBase {
         m_driveEncoder.setVelocityConversionFactor(ModuleConstants.kModuleFreeSpeedMetersPerSec);
 
         // turn encoder setup
-        m_turnCANcoder = new CANCoder(cancoderCanChannel);
-        m_turnCANcoder.configFactoryDefault();
-        m_turnCANcoder.configAllSettings(GenerateCanCoderConfig());
+        m_turnCANcoder = new CANcoder(cancoderCanChannel);
+        m_turnCANcoder.getConfigurator().apply(new CANcoderConfiguration());
 
         m_turnEncoder = m_turnMotor.getEncoder();
         m_turnEncoder.setPositionConversionFactor(ModuleConstants.kTurnDegreesPerMotorRev);
         m_turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurnDegreesPerSec);
         m_turnEncoderOffset = turnEncoderOffset;
-        m_turnEncoder.setPosition(m_turnCANcoder.getAbsolutePosition() - m_turnEncoderOffset);
+        m_turnEncoder.setPosition(m_turnCANcoder.getAbsolutePosition().getValueAsDouble() - m_turnEncoderOffset);
 
         // Drive PIDF Setup
         m_driveVelController = m_driveMotor.getPIDController();
@@ -109,20 +105,10 @@ public class SwerveModule extends SubsystemBase {
         m_driveVelController.setReference(m_state.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
     }
 
-    private static CANCoderConfiguration GenerateCanCoderConfig() {
-        CANCoderConfiguration sensorConfig = new CANCoderConfiguration();
-
-        sensorConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-        sensorConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
-        sensorConfig.sensorTimeBase = SensorTimeBase.PerSecond;
-
-        return sensorConfig;
-    }
-
     private boolean checkCAN() {
         m_driveMotorConnected = m_driveMotor.getFirmwareVersion() != 0;
         m_turnMotorConnected = m_turnMotor.getFirmwareVersion() != 0;
-        m_turnCoderConnected = m_turnCANcoder.getFirmwareVersion() > 0;
+        m_turnCoderConnected = m_turnCANcoder.getDeviceID() > 0;
 
         return m_driveMotorConnected && m_turnMotorConnected && m_turnCoderConnected;
     }
