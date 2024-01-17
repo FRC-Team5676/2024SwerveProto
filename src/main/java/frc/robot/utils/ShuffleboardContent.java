@@ -48,9 +48,9 @@ public class ShuffleboardContent {
 
                 drLayout.addNumber("Drive Speed MPS " + abrev, () -> sm.m_driveEncoder.getVelocity());
                 drLayout.addNumber("Drive Position DEG" + abrev, () -> sm.m_driveEncoder.getPosition());
-                drLayout.addNumber("App Output " + abrev, () -> sm.m_driveMotor.getAppliedOutput());
-                drLayout.addNumber("Current Amps " + abrev, () -> sm.m_driveMotor.getOutputCurrent());
-                drLayout.addNumber("Firmware" + abrev, () -> sm.m_driveMotor.getFirmwareVersion());
+                drLayout.addNumber("App Output " + abrev, () -> sm.m_driveSparkMax.getAppliedOutput());
+                drLayout.addNumber("Current Amps " + abrev, () -> sm.m_driveSparkMax.getOutputCurrent());
+                drLayout.addNumber("Firmware" + abrev, () -> sm.m_driveSparkMax.getFirmwareVersion());
         }
 
         public static void initTurnShuffleboard(SwerveModule sm) {
@@ -67,11 +67,11 @@ public class ShuffleboardContent {
                 }
                 tuLayout.addNumber("Turn Enc Pos " + abrev, () -> sm.m_turnEncoder.getPosition() % 360);
                 tuLayout.addNumber("Act Ang Deg " + abrev, () -> sm.m_turnEncoder.getPosition());
-                tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnMotor.getAppliedOutput());
+                tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnSparkMax.getAppliedOutput());
                 tuLayout.addNumber("Abs Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
-                tuLayout.addNumber("Current Amps" + abrev, () -> sm.m_turnMotor.getOutputCurrent());
-                tuLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffset);
-                tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnMotor.getFirmwareVersion());
+                tuLayout.addNumber("Current Amps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());
+                tuLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffsetDeg);
+                tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnSparkMax.getFirmwareVersion());
         }
 
         public static void initCoderBooleanShuffleboard(SwerveModule sm) {
@@ -99,7 +99,7 @@ public class ShuffleboardContent {
 
                 coderLayout.addNumber("Abs Position" + abrev,
                                 () -> sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble());
-                coderLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffset);
+                coderLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffsetDeg);
                 coderLayout.addNumber("Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
                 coderLayout.addNumber("Velocity" + abrev, () -> sm.m_turnCANcoder.getVelocity().getValueAsDouble());
         }

@@ -1,5 +1,7 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class DriveConstants {
@@ -39,7 +41,7 @@ public final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxRotationRadiansPerSecond = Math.PI;
+    public static final double kMaxRotationRadiansPerSecond = 2 * Math.PI; // radians per second
 
 
     // Chassis configuration
@@ -48,6 +50,7 @@ public final class DriveConstants {
 
     // Drive Control
     public static final boolean kFieldRelative = true;
-    public static final double kTranslationSlew = 1.55;
-    public static final double kRotationSlew = 3.00;
+    public static final double kDirectionSlewRate = 1.2; // radians per second
+    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 }
