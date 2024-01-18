@@ -7,6 +7,8 @@ package frc.robot.utils;
 import java.util.Map;
 
 import com.ctre.phoenix6.StatusSignal;
+
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -66,9 +68,9 @@ public class ShuffleboardContent {
                         tuLayout.addNumber("Turn Setpoint Deg " + abrev, () -> sm.m_state.angle.getDegrees());
                 }
                 tuLayout.addNumber("Turn Enc Pos " + abrev, () -> sm.m_turnEncoder.getPosition() % 360);
-                tuLayout.addNumber("Act Ang Deg " + abrev, () -> sm.m_turnEncoder.getPosition());
+                tuLayout.addNumber("Act Ang Deg " + abrev, () -> Units.radiansToDegrees(sm.m_turnEncoder.getPosition()));
                 tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnSparkMax.getAppliedOutput());
-                tuLayout.addNumber("Abs Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
+                tuLayout.addNumber("Abs Position" + abrev, () -> Units.radiansToDegrees(sm.m_turnCANcoder.getPosition().getValueAsDouble()));
                 tuLayout.addNumber("Current Amps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());
                 tuLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffsetDeg);
                 tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnSparkMax.getFirmwareVersion());
