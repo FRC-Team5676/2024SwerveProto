@@ -27,8 +27,8 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontLeftDriveMotorCanId,
             DriveConstants.kFrontLeftTurnMotorCanId,
             DriveConstants.kFrontLeftTurnEncoderCanId,
-            DriveConstants.kFrontLeftDriveMotorReversed,
-            DriveConstants.kFrontLeftTurningMotorReversed,
+            DriveConstants.kDriveMotorReversed,
+            DriveConstants.kTurnMotorReversed,
             DriveConstants.kFrontLeftAngularOffset);
 
     private final SwerveModule m_frontRight = new SwerveModule(
@@ -36,8 +36,8 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontRightDriveMotorCanId,
             DriveConstants.kFrontRightTurnMotorCanId,
             DriveConstants.kFrontRightTurnEncoderCanId,
-            DriveConstants.kFrontRightDriveMotorReversed,
-            DriveConstants.kFrontRightTurningMotorReversed,
+            DriveConstants.kDriveMotorReversed,
+            DriveConstants.kTurnMotorReversed,
             DriveConstants.kFrontRightAngularOffset);
 
     private final SwerveModule m_rearLeft = new SwerveModule(
@@ -45,8 +45,8 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearLeftDriveMotorCanId,
             DriveConstants.kRearLeftTurnMotorCanId,
             DriveConstants.kRearLeftTurnEncoderCanId,
-            DriveConstants.kRearLeftDriveMotorReversed,
-            DriveConstants.kRearLeftTurnMotorReversed,
+            DriveConstants.kDriveMotorReversed,
+            DriveConstants.kTurnMotorReversed,
             DriveConstants.kRearLeftAngularOffset);
 
     private final SwerveModule m_rearRight = new SwerveModule(
@@ -54,8 +54,8 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearRightDriveMotorCanId,
             DriveConstants.kRearRightTurnMotorCanId,
             DriveConstants.kRearRightTurnEncoderCanId,
-            DriveConstants.kRearRightDriveMotorReversed,
-            DriveConstants.kRearRightTurnMotorReversed,
+            DriveConstants.kDriveMotorReversed,
+            DriveConstants.kTurnMotorReversed,
             DriveConstants.kRearRightAngularOffset);
 
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -81,7 +81,7 @@ public class SwerveDrive extends SubsystemBase {
     public void periodic() {
         // Update the odometry in the periodic block
         SmartDashboard.putNumber("Gyroscope Angle", m_gyro.getAngle());
-        
+
         // Update the odometry in the periodic block
         m_odometry.update(
                 Rotation2d.fromDegrees(getYaw()),

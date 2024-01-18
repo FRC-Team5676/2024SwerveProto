@@ -1,24 +1,15 @@
 package frc.robot.constants;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class DriveConstants {
-    public static final boolean kFrontLeftTurningMotorReversed = true;
-    public static final boolean kFrontRightTurningMotorReversed = true;
-    public static final boolean kRearLeftTurnMotorReversed = true;
-    public static final boolean kRearRightTurnMotorReversed = true;
+    public static final boolean kDriveMotorReversed = true;
+    public static final boolean kTurnMotorReversed = true;
 
-    public static final boolean kFrontLeftDriveMotorReversed = true;
-    public static final boolean kFrontRightDriveMotorReversed = true;
-    public static final boolean kRearLeftDriveMotorReversed = true;
-    public static final boolean kRearRightDriveMotorReversed = true;
-
-    public static final double kFrontLeftAngularOffset = 41.3;
-    public static final double kFrontRightAngularOffset = 113.2;
-    public static final double kRearLeftAngularOffset = 125.59;
-    public static final double kRearRightAngularOffset = 255.14;
+    public static final double kFrontLeftAngularOffset = 48.4;
+    public static final double kFrontRightAngularOffset = -7.5;
+    public static final double kRearLeftAngularOffset = -6.4;
+    public static final double kRearRightAngularOffset = 30.1;
 
     // Spark MAX Drive Motor CAN IDs
     public static final int kFrontLeftDriveMotorCanId = 32;
@@ -45,8 +36,8 @@ public final class DriveConstants {
 
 
     // Chassis configuration
-    public static final double kRobotWidth = Units.inchesToMeters(23.25);  // Distance between centers of right and left wheels on robot
-    public static final double kRobotLength = Units.inchesToMeters(19.25); // Distance between front and back wheels on robot
+    public static final double kRobotWidth = Units.inchesToMeters(21.25);  // Distance between centers of right and left wheels on robot
+    public static final double kRobotLength = Units.inchesToMeters(21.25); // Distance between front and back wheels on robot
 
     // Drive Control
     public static final boolean kFieldRelative = true;
