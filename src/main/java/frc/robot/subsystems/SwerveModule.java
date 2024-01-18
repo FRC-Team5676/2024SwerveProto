@@ -27,7 +27,7 @@ public class SwerveModule extends SubsystemBase {
     public boolean m_driveMotorConnected;
     public boolean m_turnMotorConnected;
     public boolean m_turnCoderConnected;
-    public SwerveModuleState m_state;
+    public SwerveModuleState m_state = new SwerveModuleState();
 
     private final SparkPIDController m_drivePIDController;
     private final SparkPIDController m_turnPIDController;
@@ -78,8 +78,8 @@ public class SwerveModule extends SubsystemBase {
         // Invert the turning encoder, since the output shaft rotates in the opposite
         // direction of
         // the steering motor in the MAXSwerve Module.
-        m_driveEncoder.setInverted(driveMotorInverted);
-        m_turnEncoder.setInverted(turnMotorInverted);
+        //m_driveEncoder.setInverted(driveMotorInverted); //Commented out (Macy)
+        //m_turnEncoder.setInverted(turnMotorInverted); //Commented out (Macy)
 
         // Enable PID wrap around for the turning motor. This will allow the PID
         // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
