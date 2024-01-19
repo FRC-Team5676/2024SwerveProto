@@ -67,12 +67,12 @@ public class ShuffleboardContent {
                 if (sm.m_state != null) {
                         tuLayout.addNumber("Turn Setpoint Deg " + abrev, () -> sm.m_state.angle.getDegrees());
                 }
-                tuLayout.addNumber("Turn Enc Pos " + abrev, () -> sm.m_turnEncoder.getPosition() % 360);
-                tuLayout.addNumber("Act Ang Deg " + abrev, () -> Units.radiansToDegrees(sm.m_turnEncoder.getPosition()));
+                tuLayout.addNumber("TurnEncPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnEncoder.getPosition()) % 360);
+                tuLayout.addNumber("ActAngDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnEncoder.getPosition()));
                 tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnSparkMax.getAppliedOutput());
-                tuLayout.addNumber("Abs Position" + abrev, () -> Units.radiansToDegrees(sm.m_turnCANcoder.getPosition().getValueAsDouble()));
-                tuLayout.addNumber("Current Amps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());
-                tuLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffsetDeg);
+                tuLayout.addNumber("AbsPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble()));
+                tuLayout.addNumber("CurrentAmps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());
+                tuLayout.addNumber("AbsOffsetDeg" + abrev, () -> sm.m_turnEncoderOffsetDeg);
                 tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnSparkMax.getFirmwareVersion());
         }
 
@@ -99,11 +99,10 @@ public class ShuffleboardContent {
                                 .getLayout(canCoderLayout, BuiltInLayouts.kList).withPosition(moduleNumber * 2, 0)
                                 .withSize(2, 3).withProperties(Map.of("Label position", "LEFT"));
 
-                coderLayout.addNumber("Abs Position" + abrev,
-                                () -> sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble());
-                coderLayout.addNumber("Abs Offset" + abrev, () -> sm.m_turnEncoderOffsetDeg);
-                coderLayout.addNumber("Position" + abrev, () -> sm.m_turnCANcoder.getPosition().getValueAsDouble());
-                coderLayout.addNumber("Velocity" + abrev, () -> sm.m_turnCANcoder.getVelocity().getValueAsDouble());
+                coderLayout.addNumber("AbsPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble()));
+                coderLayout.addNumber("AbsOffsetDeg" + abrev, () -> sm.m_turnEncoderOffsetDeg);
+                coderLayout.addNumber("PosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getPosition().getValueAsDouble()));
+                coderLayout.addNumber("VelocityRps" + abrev, () -> sm.m_turnCANcoder.getVelocity().getValueAsDouble());
         }
 
         public static void initGyro(SwerveDrive sd) {

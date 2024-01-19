@@ -80,7 +80,7 @@ public class SwerveDrive extends SubsystemBase {
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
-        SmartDashboard.putNumber("Gyroscope Angle", m_gyro.getAngle());
+        SmartDashboard.putNumber("Gyroscope Angle", getYaw());
 
         // Update the odometry in the periodic block
         m_odometry.update(
