@@ -121,6 +121,7 @@ public class SwerveDrive extends SubsystemBase {
     // Positive towards the ceiling
     // + Clockwise / - Counter-clockwise
     public double getYaw() {
+        if (m_gyro.getYaw() < 0) return m_gyro.getYaw() + 360;
         return m_gyro.getYaw();
     }
 
