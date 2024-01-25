@@ -10,7 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants;
 import frc.robot.utils.Enums.ModulePosition;
@@ -29,6 +29,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontLeftTurnEncoderCanId,
             DriveConstants.kDriveMotorReversed,
             DriveConstants.kTurnMotorReversed,
+            DriveConstants.kFrontLeftChassisAngularOffset,
             DriveConstants.kFrontLeftAngularOffset);
 
     private final SwerveModule m_frontRight = new SwerveModule(
@@ -38,6 +39,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontRightTurnEncoderCanId,
             DriveConstants.kDriveMotorReversed,
             DriveConstants.kTurnMotorReversed,
+            DriveConstants.kFrontRightChassisAngularOffset,
             DriveConstants.kFrontRightAngularOffset);
 
     private final SwerveModule m_rearLeft = new SwerveModule(
@@ -47,6 +49,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearLeftTurnEncoderCanId,
             DriveConstants.kDriveMotorReversed,
             DriveConstants.kTurnMotorReversed,
+            DriveConstants.kRearLeftChassisAngularOffset,
             DriveConstants.kRearLeftAngularOffset);
 
     private final SwerveModule m_rearRight = new SwerveModule(
@@ -56,6 +59,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearRightTurnEncoderCanId,
             DriveConstants.kDriveMotorReversed,
             DriveConstants.kTurnMotorReversed,
+            DriveConstants.kRearRightChassisAngularOffset,
             DriveConstants.kRearRightAngularOffset);
 
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -80,7 +84,7 @@ public class SwerveDrive extends SubsystemBase {
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
-        SmartDashboard.putNumber("Gyroscope Angle (Deg)", getYaw());
+        //SmartDashboard.putNumber("Gyroscope Angle (Deg)", getYaw());
 
         // Update the odometry in the periodic block
         m_odometry.update(

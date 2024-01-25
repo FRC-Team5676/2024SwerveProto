@@ -64,11 +64,8 @@ public class ShuffleboardContent {
                                 .getLayout(turnLayout, BuiltInLayouts.kList).withPosition(moduleNumber * 2, 2)
                                 .withSize(2, 3).withProperties(Map.of("Label position", "LEFT"));
 
-                if (sm.m_state != null) {
-                        tuLayout.addNumber("Turn Setpoint Deg " + abrev, () -> sm.m_state.angle.getDegrees());
-                }
-                tuLayout.addNumber("TurnEncPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnEncoder.getPosition()) % 360);
-                tuLayout.addNumber("ActAngDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnEncoder.getPosition()));
+                tuLayout.addNumber("TurnEncPosDeg" + abrev, () -> Units.radiansToDegrees(sm.getTurnPositionRad()));
+                tuLayout.addNumber("ActAngDeg" + abrev, () -> Units.radiansToDegrees(sm.m_turnEncoder.getPosition()));
                 tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnSparkMax.getAppliedOutput());
                 tuLayout.addNumber("AbsPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble()));
                 tuLayout.addNumber("CurrentAmps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());

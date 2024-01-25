@@ -3,13 +3,21 @@ package frc.robot.constants;
 import edu.wpi.first.math.util.Units;
 
 public final class DriveConstants {
+    public static final double kDriveDeadband = 0.5;
+
     public static final boolean kDriveMotorReversed = true;
     public static final boolean kTurnMotorReversed = true;
 
-    public static final double kFrontLeftAngularOffset = 48.4;
-    public static final double kFrontRightAngularOffset = -7.5;
-    public static final double kRearLeftAngularOffset = -6.4;
-    public static final double kRearRightAngularOffset = 30.1;
+    // Angular offsets of the modules relative to the chassis in radians
+    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
+    public static final double kFrontRightChassisAngularOffset = 0;
+    public static final double kRearLeftChassisAngularOffset = Math.PI;
+    public static final double kRearRightChassisAngularOffset = Math.PI / 2;
+
+    public static final double kFrontLeftAngularOffset = 56.7;
+    public static final double kFrontRightAngularOffset = 49.0;
+    public static final double kRearLeftAngularOffset = 43.8;
+    public static final double kRearRightAngularOffset = 171.4;
 
     // Spark MAX Drive Motor CAN IDs
     public static final int kFrontLeftDriveMotorCanId = 32;
