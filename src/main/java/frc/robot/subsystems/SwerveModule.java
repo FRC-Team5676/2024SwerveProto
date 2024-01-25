@@ -89,6 +89,7 @@ public class SwerveModule extends SubsystemBase {
                 // the steering motor in the MAXSwerve Module.
                 // m_driveEncoder.setInverted(driveMotorInverted); //Commented out (Macy)
                 //m_turnEncoder.setInverted(turnMotorInverted); //Commented out (Macy)
+                m_turnSparkMax.setInverted(turnMotorInverted);
 
                 // Enable PID wrap around for the turning motor. This will allow the PID
                 // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
