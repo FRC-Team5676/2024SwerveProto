@@ -65,10 +65,10 @@ public final class ModuleConstants {
     public static final double kTurnEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurnEncoderPositionPIDMaxInput = kTurnEncoderPositionFactor; // radians
 
-    public static final double kTurnP = 0.4; //0.45 // -5
+    public static final double kTurnP = 1; //0.4 // -5
     public static final double kTurnD = 0; //0
     public static final double kTurnI = 0; //0
-    public static final double kTurnFF = 1 / kMk4iL1TurnGearRatio;
+    public static final double kTurnFF = 0; //1 / kMk4iL1TurnGearRatio;
     public static final double kTurnMinOutput = -1;
     public static final double kTurnMaxOutput = 1;
 
