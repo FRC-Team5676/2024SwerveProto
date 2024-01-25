@@ -9,10 +9,10 @@ public final class DriveConstants {
     public static final boolean kTurnMotorReversed = true;
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
+    public static final double kFrontLeftChassisAngularOffset = 0;
     public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kRearLeftChassisAngularOffset = Math.PI;
-    public static final double kRearRightChassisAngularOffset = Math.PI / 2;
+    public static final double kRearLeftChassisAngularOffset = 0;
+    public static final double kRearRightChassisAngularOffset = 0;
 
     public static final double kFrontLeftAngularOffset = 56.7;
     public static final double kFrontRightAngularOffset = 49.0;

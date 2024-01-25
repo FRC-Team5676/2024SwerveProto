@@ -94,9 +94,9 @@ public class SwerveModule extends SubsystemBase {
                 // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
                 // to 10 degrees will go through 0 rather than the other direction which is a
                 // longer route.
-                m_turnPIDController.setPositionPIDWrappingEnabled(true);
-                m_turnPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurnEncoderPositionPIDMinInput);
-                m_turnPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurnEncoderPositionPIDMaxInput);
+                //m_turnPIDController.setPositionPIDWrappingEnabled(true);
+                //m_turnPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurnEncoderPositionPIDMinInput);
+                //m_turnPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurnEncoderPositionPIDMaxInput);
 
                 // Set the PID gains for the driving motor. Note these are example gains, and
                 // you
@@ -161,7 +161,7 @@ public class SwerveModule extends SubsystemBase {
                 // relative to the chassis.
                 return new SwerveModulePosition(
                                 m_driveEncoder.getPosition(),
-                                new Rotation2d(m_turnEncoder.getPosition() - m_chassisAngularOffset));
+                                new Rotation2d(m_turnEncoder.getPosition() + m_chassisAngularOffset));
         }
 
         private boolean checkCAN() {
