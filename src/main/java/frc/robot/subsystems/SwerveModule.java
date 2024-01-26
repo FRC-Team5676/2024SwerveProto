@@ -25,7 +25,8 @@ public class SwerveModule extends SubsystemBase {
         public final CANcoder m_turnCANcoder;
         public final RelativeEncoder m_turnEncoder;
         public final double m_turnEncoderOffsetDeg;
-        public final double m_chassisAngularOffset;
+        public final double m_turnAngleCorrectionRad;
+        //public final double m_chassisAngularOffset;
         public final ModulePosition m_modulePosition;
 
         public boolean m_driveMotorConnected;
@@ -40,13 +41,11 @@ public class SwerveModule extends SubsystemBase {
                         int driveMotorCanChannel,
                         int turnMotorCanChannel,
                         int cancoderCanChannel,
-                        boolean driveMotorInverted,
                         boolean turnMotorInverted,
-                        double chassisAngularOffset,
                         double turnEncoderOffsetDeg) {
 
                 m_modulePosition = modulePosition;
-                m_chassisAngularOffset = chassisAngularOffset;
+                //m_chassisAngularOffset = chassisAngularOffset;
 
                 m_driveSparkMax = new CANSparkMax(driveMotorCanChannel, MotorType.kBrushless);
                 m_turnSparkMax = new CANSparkMax(turnMotorCanChannel, MotorType.kBrushless);
@@ -61,7 +60,7 @@ public class SwerveModule extends SubsystemBase {
                 m_turnCANcoder = new CANcoder(cancoderCanChannel);
                 CANcoderConfiguration canConfig = new CANcoderConfiguration();
                 canConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
-                canConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+                canConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
                 m_turnCANcoder.getConfigurator().apply(canConfig);
 
                 // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
@@ -129,6 +128,9 @@ public class SwerveModule extends SubsystemBase {
                 m_driveSparkMax.burnFlash();
                 m_turnSparkMax.burnFlash();
 
+                // Calc Relative Encoder Correction
+                m_turnAngleCorrectionRad = getAbsolutePositionRad();
+
                 m_driveEncoder.setPosition(0);
             
                 checkCAN();
@@ -144,7 +146,7 @@ public class SwerveModule extends SubsystemBase {
                 // Apply chassis angular offset to the desired state.
                 SwerveModuleState correctedDesiredState = new SwerveModuleState();
                 correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-                correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
+                correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_turnAngleCorrectionRad));
 
                 // Optimize the reference state to avoid spinning further than 90 degrees.
                 SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
@@ -162,7 +164,7 @@ public class SwerveModule extends SubsystemBase {
                 // relative to the chassis.
                 return new SwerveModulePosition(
                                 m_driveEncoder.getPosition(),
-                                new Rotation2d(m_turnEncoder.getPosition() + m_chassisAngularOffset));
+                                new Rotation2d(m_turnEncoder.getPosition() + m_turnAngleCorrectionRad));
         }
 
         private boolean checkCAN() {

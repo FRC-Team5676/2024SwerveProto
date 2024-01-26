@@ -26,9 +26,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontLeftDriveMotorCanId,
             DriveConstants.kFrontLeftTurnMotorCanId,
             DriveConstants.kFrontLeftTurnEncoderCanId,
-            DriveConstants.kDriveMotorReversed,
-            DriveConstants.kTurnMotorReversed,
-            DriveConstants.kFrontLeftChassisAngularOffset,
+            DriveConstants.kTurnMotorInverted,
             DriveConstants.kFrontLeftAngularOffset);
 
     private final SwerveModule m_frontRight = new SwerveModule(
@@ -36,9 +34,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontRightDriveMotorCanId,
             DriveConstants.kFrontRightTurnMotorCanId,
             DriveConstants.kFrontRightTurnEncoderCanId,
-            DriveConstants.kDriveMotorReversed,
-            DriveConstants.kTurnMotorReversed,
-            DriveConstants.kFrontRightChassisAngularOffset,
+            DriveConstants.kTurnMotorInverted,
             DriveConstants.kFrontRightAngularOffset);
 
     private final SwerveModule m_rearLeft = new SwerveModule(
@@ -46,9 +42,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearLeftDriveMotorCanId,
             DriveConstants.kRearLeftTurnMotorCanId,
             DriveConstants.kRearLeftTurnEncoderCanId,
-            DriveConstants.kDriveMotorReversed,
-            DriveConstants.kTurnMotorReversed,
-            DriveConstants.kRearLeftChassisAngularOffset,
+            DriveConstants.kTurnMotorInverted,
             DriveConstants.kRearLeftAngularOffset);
 
     private final SwerveModule m_rearRight = new SwerveModule(
@@ -56,9 +50,7 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kRearRightDriveMotorCanId,
             DriveConstants.kRearRightTurnMotorCanId,
             DriveConstants.kRearRightTurnEncoderCanId,
-            DriveConstants.kDriveMotorReversed,
-            DriveConstants.kTurnMotorReversed,
-            DriveConstants.kRearRightChassisAngularOffset,
+            DriveConstants.kTurnMotorInverted,
             DriveConstants.kRearRightAngularOffset);
 
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);

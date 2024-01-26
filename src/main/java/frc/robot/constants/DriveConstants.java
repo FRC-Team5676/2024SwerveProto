@@ -5,8 +5,7 @@ import edu.wpi.first.math.util.Units;
 public final class DriveConstants {
     public static final double kDriveDeadband = 0.5;
 
-    public static final boolean kDriveMotorReversed = true;
-    public static final boolean kTurnMotorReversed = true;
+    public static final boolean kTurnMotorInverted = true;
 
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = 0;
@@ -14,10 +13,10 @@ public final class DriveConstants {
     public static final double kRearLeftChassisAngularOffset = 0;
     public static final double kRearRightChassisAngularOffset = 0;
 
-    public static final double kFrontLeftAngularOffset = 56.7;
-    public static final double kFrontRightAngularOffset = 49.0;
-    public static final double kRearLeftAngularOffset = 43.8;
-    public static final double kRearRightAngularOffset = 171.4;
+    public static final double kFrontLeftAngularOffset = 304.1;
+    public static final double kFrontRightAngularOffset = 314.6;
+    public static final double kRearLeftAngularOffset = 319.0;
+    public static final double kRearRightAngularOffset = 186.2;
 
     // Spark MAX Drive Motor CAN IDs
     public static final int kFrontLeftDriveMotorCanId = 32;
