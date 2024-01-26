@@ -129,7 +129,7 @@ public class SwerveModule extends SubsystemBase {
                 m_turnSparkMax.burnFlash();
 
                 // Calc Relative Encoder Correction
-                m_turnAngleCorrectionRad = getAbsolutePositionRad();
+                m_turnAngleCorrectionRad = Math.abs(getAbsolutePositionRad());
 
                 m_driveEncoder.setPosition(0);
             
