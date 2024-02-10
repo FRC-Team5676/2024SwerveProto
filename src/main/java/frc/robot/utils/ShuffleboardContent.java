@@ -78,12 +78,12 @@ public class ShuffleboardContent {
                 String abrev = ModuleConstants.modAbrev[moduleNumber];
                 ShuffleboardTab x = Shuffleboard.getTab("CanCoders");
 
-                x.addBoolean("CANCoder Connected" + abrev, () -> sm.m_turnCoderConnected)
-                                .withPosition(8, moduleNumber * 2);
+                x.addBoolean("Connected" + abrev, () -> sm.m_turnCoderConnected)
+                                .withPosition(moduleNumber * 2 - 1, 4); // 1 3 5 7
 
                 StatusSignal<Integer> faults = sm.m_turnCANcoder.getFaultField();
-                x.addBoolean("CANCoder Faults" + abrev, () -> 0 != faults.getValue())
-                                .withPosition(9, moduleNumber * 2);
+                x.addBoolean("Faults" + abrev, () -> 0 != faults.getValue())
+                                .withPosition(moduleNumber * 2, 4); // 2 4 6 8
 
         }
 
@@ -105,13 +105,11 @@ public class ShuffleboardContent {
         public static void initGyro(SwerveDrive sd) {
                 ShuffleboardTab drLayout1 = Shuffleboard.getTab("Gyro");
 
-                drLayout1.addNumber("Gyroscope Angle", () -> sd.getYaw()).withPosition(2, 1)
+                drLayout1.addNumber("Yaw", () -> sd.getYaw()).withPosition(1, 1)
                                 .withSize(1, 1);
-                drLayout1.addNumber("Yaw", () -> sd.getYaw()).withPosition(3, 1)
+                drLayout1.addNumber("Roll", () -> sd.getRoll()).withPosition(2, 1)
                                 .withSize(1, 1);
-                drLayout1.addNumber("Roll", () -> sd.getRoll()).withPosition(4, 1)
-                                .withSize(1, 1);
-                drLayout1.addNumber("Pitch", () -> sd.getPitch()).withPosition(5, 1)
+                drLayout1.addNumber("Pitch", () -> sd.getPitch()).withPosition(3, 1)
                                 .withSize(1, 1);
         }
 }
