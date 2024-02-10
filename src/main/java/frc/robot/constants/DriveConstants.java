@@ -3,7 +3,8 @@ package frc.robot.constants;
 import edu.wpi.first.math.util.Units;
 
 public final class DriveConstants {
-    public static final double kDriveDeadband = 0.5;
+    public static final double kXYDeadband = 0.05;
+    public static final double kRotationDeadband = 0.1;
 
     public static final boolean kTurnMotorInverted = true;
 
@@ -39,8 +40,7 @@ public final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxRotationRadiansPerSecond = 2 * Math.PI; // radians per second
-
+    public static final double kMaxRotationRadiansPerSecond = Math.PI; // radians per second
 
     // Chassis configuration
     public static final double kRobotWidth = Units.inchesToMeters(21.25);  // Distance between centers of right and left wheels on robot

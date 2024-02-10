@@ -80,9 +80,9 @@ public class RobotContainer {
     swerve.setDefaultCommand(
         new TeleopSwerveCommand(
             swerve,
-            () -> MathUtil.applyDeadband(driver.getY(), DriveConstants.kDriveDeadband),
-            () -> MathUtil.applyDeadband(driver.getX(), DriveConstants.kDriveDeadband),
-            () -> MathUtil.applyDeadband(driver.getZ(), DriveConstants.kDriveDeadband)));
+            () -> MathUtil.applyDeadband(driver.getY(), DriveConstants.kXYDeadband),
+            () -> MathUtil.applyDeadband(driver.getX(), DriveConstants.kXYDeadband),
+            () -> MathUtil.applyDeadband(driver.getZ(), DriveConstants.kRotationDeadband)));
 
     driver.button(1).onTrue(new InstantCommand(swerve::toggleFieldRelative));
     driver.button(2).onTrue(new InstantCommand(swerve::zeroGyro));
