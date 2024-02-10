@@ -14,18 +14,6 @@ public final class ModuleConstants {
     public static final int kTurnMotorCurrentLimit = 20; // amps
 
     // From: https://www.swervedrivespecialties.com/products/mk4i-swerve-module
-
-
-
-
-
-
-
-
-
-
-
-
     /* Drive */
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4.0);
     public static final double kMk4iL1DriveGearRatio = 8.14;
@@ -55,8 +43,6 @@ public final class ModuleConstants {
 
     /* Turn */
     public static final double kMk4iL1TurnGearRatio = 150/7;
-    //public static final double kTurnMotorFreeSpeedRps = kNeoFreeSpeedRpm / 60;
-    //public static final double kTurnWheelFreeSpeedRps = kTurnMotorFreeSpeedRps / kMk4iL1TurnGearRatio;
     public static final double kTurnEncoderPositionFactor = (2 * Math.PI)
         / kMk4iL1TurnGearRatio; // added gear ratio (E. Macy)
     public static final double kTurnEncoderVelocityFactor = (2 * Math.PI) 

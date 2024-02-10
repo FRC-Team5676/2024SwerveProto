@@ -3,7 +3,8 @@ package frc.robot.constants;
 import edu.wpi.first.math.util.Units;
 
 public final class DriveConstants {
-    public static final double kDriveDeadband = 0.5;
+    public static final double kXYDeadband = 0.05;
+    public static final double kRotationDeadband = 0.1;
 
     public static final boolean kTurnMotorInverted = true;
 
@@ -13,10 +14,10 @@ public final class DriveConstants {
     public static final double kRearLeftChassisAngularOffset = 0;
     public static final double kRearRightChassisAngularOffset = 0;
 
-    public static final double kFrontLeftAngularOffset = 304.1;
-    public static final double kFrontRightAngularOffset = 314.6;
-    public static final double kRearLeftAngularOffset = 319.0;
-    public static final double kRearRightAngularOffset = 186.2;
+    public static final double kFrontLeftAngularOffset = 302.9;
+    public static final double kFrontRightAngularOffset = 308.2;
+    public static final double kRearLeftAngularOffset = 321.1;
+    public static final double kRearRightAngularOffset = 187.0;
 
     // Spark MAX Drive Motor CAN IDs
     public static final int kFrontLeftDriveMotorCanId = 32;
@@ -40,7 +41,6 @@ public final class DriveConstants {
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxRotationRadiansPerSecond = Math.PI; // radians per second
-
 
     // Chassis configuration
     public static final double kRobotWidth = Units.inchesToMeters(21.25);  // Distance between centers of right and left wheels on robot

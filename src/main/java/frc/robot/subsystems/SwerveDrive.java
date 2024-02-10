@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants;
 import frc.robot.utils.Enums.ModulePosition;
+import frc.robot.utils.ShuffleboardContent;
 
 public class SwerveDrive extends SubsystemBase {
     public static final SwerveDriveKinematics m_driveKinematics = new SwerveDriveKinematics(
@@ -69,7 +70,7 @@ public class SwerveDrive extends SubsystemBase {
             });
 
     public SwerveDrive() {
-
+        ShuffleboardContent.initGyro(this);
     }
 
     @Override
@@ -115,8 +116,8 @@ public class SwerveDrive extends SubsystemBase {
     // Positive towards the ceiling
     // + Clockwise / - Counter-clockwise
     public double getYaw() {
-        if (m_gyro.getYaw() < 0) return m_gyro.getYaw() + 360;
-        return m_gyro.getYaw();
+        //if (m_gyro.getYaw() < 0) return m_gyro.getYaw() + 360;
+        return -m_gyro.getYaw();
     }
 
     // Roll Y direction
