@@ -8,6 +8,9 @@ import frc.robot.subsystems.SwerveDrive;
 import frc.robot.utils.AutonManager;
 import frc.robot.commands.swerve.TeleopSwerveCommand;
 import frc.robot.constants.DriveConstants;
+
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -51,7 +54,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return new PathPlannerAuto("Test Auto");
   }
 
   private void addAutonomousChoices() {
