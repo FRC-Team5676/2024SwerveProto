@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DriveConstants;
+import frc.robot.constants.ModuleConstants;
 import frc.robot.utils.Enums.ModulePosition;
 import frc.robot.utils.ShuffleboardContent;
 
@@ -192,6 +193,8 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     private void configAuto() {
+        double driveBaseRadius = Math.pow(Math.pow(DriveConstants.kRobotLength, 2) + Math.pow(DriveConstants.kRobotWidth, 2), 0.5) / 2;
+
         // Configure AutoBuilder last
         AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
@@ -200,10 +203,10 @@ public class SwerveDrive extends SubsystemBase {
                 this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your
                                                  // Constants class
-                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                        4.5, // Max module speed, in m/s
-                        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        new PIDConstants(ModuleConstants.kDriveP, ModuleConstants.kDriveI, ModuleConstants.kDriveD), // Translation PID constants
+                        new PIDConstants(ModuleConstants.kTurnP, ModuleConstants.kTurnI, ModuleConstants.kTurnD), // Rotation PID constants
+                        DriveConstants.kMaxSpeedMetersPerSecond, // Max module speed, in m/s
+                        driveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
                 ),
                 () -> {
