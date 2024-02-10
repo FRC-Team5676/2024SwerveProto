@@ -26,7 +26,6 @@ public class SwerveModule extends SubsystemBase {
         public final RelativeEncoder m_turnEncoder;
         public final double m_turnEncoderOffsetDeg;
         public final double m_turnAngleCorrectionRad;
-        //public final double m_chassisAngularOffset;
         public final ModulePosition m_modulePosition;
 
         public boolean m_driveMotorConnected;
@@ -35,6 +34,9 @@ public class SwerveModule extends SubsystemBase {
 
         private final SparkPIDController m_drivePIDController;
         private final SparkPIDController m_turnPIDController;
+
+        private double m_Velocity;
+        private double m_Angle;
 
         public SwerveModule(
                         ModulePosition modulePosition,
@@ -84,23 +86,10 @@ public class SwerveModule extends SubsystemBase {
                 m_turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurnEncoderVelocityFactor);
 
                 // Invert the turning encoder, since the output shaft rotates in the opposite
-                // direction of
-                // the steering motor in the MAXSwerve Module.
-                // m_driveEncoder.setInverted(driveMotorInverted); //Commented out (Macy)
-                //m_turnEncoder.setInverted(turnMotorInverted); //Commented out (Macy)
+                // direction of the steering motor in the MAXSwerve Module.
                 m_turnSparkMax.setInverted(turnMotorInverted);
 
-                // Enable PID wrap around for the turning motor. This will allow the PID
-                // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
-                // to 10 degrees will go through 0 rather than the other direction which is a
-                // longer route.
-                //m_turnPIDController.setPositionPIDWrappingEnabled(true);
-                //m_turnPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurnEncoderPositionPIDMinInput);
-                //m_turnPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurnEncoderPositionPIDMaxInput);
-
-                // Set the PID gains for the driving motor. Note these are example gains, and
-                // you
-                // may need to tune them for your own robot!
+                // Set the PID gains for the driving motor
                 m_drivePIDController.setP(ModuleConstants.kDriveP);
                 m_drivePIDController.setI(ModuleConstants.kDriveI);
                 m_drivePIDController.setD(ModuleConstants.kDriveD);
@@ -108,9 +97,7 @@ public class SwerveModule extends SubsystemBase {
                 m_drivePIDController.setOutputRange(ModuleConstants.kDriveMinOutput,
                                 ModuleConstants.kDriveMaxOutput);
 
-                // Set the PID gains for the turning motor. Note these are example gains, and
-                // you
-                // may need to tune them for your own robot!
+                // Set the PID gains for the turning motor
                 m_turnPIDController.setP(ModuleConstants.kTurnP);
                 m_turnPIDController.setI(ModuleConstants.kTurnI);
                 m_turnPIDController.setD(ModuleConstants.kTurnD);
@@ -152,11 +139,13 @@ public class SwerveModule extends SubsystemBase {
                 SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
                                 new Rotation2d(m_turnEncoder.getPosition()));
 
+                // Set velocity and and angle
+                m_Velocity = optimizedDesiredState.speedMetersPerSecond;
+                m_Angle = optimizedDesiredState.angle.getRadians();
+
                 // Command driving and turning SPARKS MAX towards their respective setpoints.
-                m_drivePIDController.setReference(optimizedDesiredState.speedMetersPerSecond,
-                                CANSparkMax.ControlType.kVelocity);
-                m_turnPIDController.setReference(optimizedDesiredState.angle.getRadians(),
-                                CANSparkMax.ControlType.kPosition);
+                m_drivePIDController.setReference(m_Velocity, CANSparkMax.ControlType.kVelocity);
+                m_turnPIDController.setReference(m_Angle, CANSparkMax.ControlType.kPosition);
         }
 
         public SwerveModulePosition getPosition() {
@@ -189,5 +178,9 @@ public class SwerveModule extends SubsystemBase {
 
                 double posDeg = conv + fullPosDeg % 360;
                 return Units.degreesToRadians(posDeg);
+        }
+
+        public SwerveModuleState getSwerveModuleState() {
+                return new SwerveModuleState(m_Velocity, Rotation2d.fromRadians(m_Angle));
         }
 }
