@@ -43,7 +43,7 @@ public final class DriveConstants {
     public static final double kMaxRotationRadiansPerSecond = Math.PI; // radians per second
 
     // Chassis configuration
-    public static final double kRobotWidth = Units.inchesToMeters(21.25);  // Distance between centers of right and left wheels on robot
+    public static final double kRobotWidth = Units.inchesToMeters(22.75);  // Distance between centers of right and left wheels on robot
     public static final double kRobotLength = Units.inchesToMeters(21.25); // Distance between front and back wheels on robot
 
     // Drive Control
