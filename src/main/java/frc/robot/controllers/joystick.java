@@ -19,17 +19,20 @@ public class joystick {
         button2 = createButton(2);
     }
 
-    /** The X (left/right) position of the joystick on the controller from -1.0 to 1.0 */
+    /** The X (left/right) position of the joystick on the controller from -1.0 to 1.0 
+     * Strafe left/right */
     public double getStickX() {
         return deadzone(controller.getX(), kDeadzoneStick);
     }
 
-    /** The Y (up/down) position of the joystick on the controller from -1.0 to 1.0 */
+    /** The Y (up/down) position of the joystick on the controller from -1.0 to 1.0
+     * Move forward or backwards */
     public double getStickY() {
         return deadzone(controller.getY(), kDeadzoneStick);
     }
 
-    /** The Z ()clockwise/counter-clockwise) rotation of the joystick on the controller from -1.0 to 1.0 */
+    /** The Z ()clockwise/counter-clockwise) rotation of the joystick on the controller from -1.0 to 1.0
+     * Rotate robot clockwise or counter-clockwise*/
     public double getStickZ() {
         return deadzone(controller.getZ(), kDeadzoneStick * 2);
     }
