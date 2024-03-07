@@ -1,9 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.AbsoluteEncoder;
