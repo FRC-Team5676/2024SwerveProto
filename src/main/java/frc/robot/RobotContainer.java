@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.auto.AutoRoutines;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -47,38 +49,15 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return new PathPlannerAuto("Test Auto");
+    return autonManager.getSelected();
   }
 
   private void addAutonomousChoices() {
-    /*
-     * autonManager.addDefaultOption("Set Cone and Leave",
-     * AutoRoutines.PlaceConeAndLeave(lowerArm, upperArm, intakeArm,
-     * swerve, xController, yController, zController));
-     */
+    autonManager.addDefaultOption("Shoot Note and Leave",
+        AutoRoutines.ShootNoteAndLeave(swerve));
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureButtonBindings() {
     swerve.setDefaultCommand(
         new TeleopSwerveCommand(
@@ -88,6 +67,6 @@ public class RobotContainer {
             () -> MathUtil.applyDeadband(driver.getZ(), DriveConstants.kRotationDeadband)));
 
     driver.button(1).onTrue(new InstantCommand(swerve::toggleFieldRelative));
-    driver.button(2).onTrue(new InstantCommand(swerve::zeroGyro));
+    driver.button(8).onTrue(new InstantCommand(swerve::zeroGyro));
   }
 }
