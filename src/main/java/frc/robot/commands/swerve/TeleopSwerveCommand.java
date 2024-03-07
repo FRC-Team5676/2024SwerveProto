@@ -43,7 +43,7 @@ public class TeleopSwerveCommand extends Command {
         strafe = Math.signum(strafe) * Math.pow(strafe, 2);
         rotation = Math.signum(rotation) * Math.pow(rotation, 2);
 
-        m_swerveDrive.drive(throttle, strafe, rotation);
+        m_swerveDrive.teleopDrive(throttle, strafe, rotation);
     }
 
     // Called once the command ends or is interrupted.
