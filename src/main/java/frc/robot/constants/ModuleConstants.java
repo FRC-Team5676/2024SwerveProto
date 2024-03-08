@@ -42,11 +42,8 @@ public final class ModuleConstants {
 
 
     /* Turn */
-    public static final double kMk4iL1TurnGearRatio = 150/7;
-    public static final double kTurnEncoderPositionFactor = (2 * Math.PI)
-        / kMk4iL1TurnGearRatio; // added gear ratio (E. Macy)
-    public static final double kTurnEncoderVelocityFactor = (2 * Math.PI) 
-        / kMk4iL1TurnGearRatio / 60.0; // added gear ratio (E. Macy)
+    public static final double kTurnEncoderPositionFactor = (2 * Math.PI);
+    public static final double kTurnEncoderVelocityFactor = (2 * Math.PI);
 
     public static final double kTurnEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurnEncoderPositionPIDMaxInput = kTurnEncoderPositionFactor; // radians

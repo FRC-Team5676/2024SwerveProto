@@ -63,6 +63,7 @@ public class ShuffleboardContent {
 
                 tuLayout.addNumber("TurnAngleOut" + abrev, () -> sm.m_turnSparkMax.getAppliedOutput());
                 tuLayout.addNumber("AbsPosDeg" + abrev, () -> Units.radiansToDegrees(sm.m_turnEncoder.getPosition()));
+                tuLayout.addNumber("PosDeg" + abrev, () -> Units.radiansToDegrees(sm.getRawPositionRad()));
                 tuLayout.addNumber("CurrentAmps" + abrev, () -> sm.m_turnSparkMax.getOutputCurrent());
                 tuLayout.addNumber("AbsOffsetDeg" + abrev, () -> sm.m_turnEncoderOffsetDeg);
                 tuLayout.addNumber("Firmware" + abrev, () -> sm.m_turnSparkMax.getFirmwareVersion());

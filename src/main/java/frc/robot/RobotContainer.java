@@ -21,7 +21,7 @@ public class RobotContainer {
   private final AutonManager autonManager = new AutonManager();
 
   // The driver's controller
-  private final CommandJoystick driver = new CommandJoystick(0);
+  private final CommandJoystick driver = new CommandJoystick(1);
 
   // The robot's subsystems
   private final SwerveDrive swerve = new SwerveDrive();

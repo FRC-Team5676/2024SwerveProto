@@ -149,6 +149,10 @@ public class SwerveModule extends SubsystemBase {
                 return m_driveMotorConnected && m_turnMotorConnected;
         }
 
+        public double getRawPositionRad() {
+                return m_turnEncoder.getPosition();
+        }
+
         public double getAbsolutePositionRad() {
                 return m_turnEncoder.getPosition() - Units.degreesToRadians(m_turnEncoderOffsetDeg);
         }
