@@ -6,8 +6,6 @@ public final class DriveConstants {
     public static final double kXYDeadband = 0.05;
     public static final double kRotationDeadband = 0.1;
 
-    public static final boolean kTurnMotorInverted = true;
-
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftAngularOffset = 302.9;
     public static final double kFrontRightAngularOffset = 308.2;

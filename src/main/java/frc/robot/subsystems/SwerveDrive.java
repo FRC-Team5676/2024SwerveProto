@@ -47,28 +47,24 @@ public class SwerveDrive extends SubsystemBase {
             DriveConstants.kFrontLeftDriveMotorCanId,
             DriveConstants.kFrontLeftTurnMotorCanId,
             DriveConstants.kFrontLeftTurnEncoderCanId,
-            DriveConstants.kTurnMotorInverted,
             DriveConstants.kFrontLeftAngularOffset);
     private final SwerveModule m_frontRight = new SwerveModule(
             ModulePosition.FRONT_RIGHT,
             DriveConstants.kFrontRightDriveMotorCanId,
             DriveConstants.kFrontRightTurnMotorCanId,
             DriveConstants.kFrontRightTurnEncoderCanId,
-            DriveConstants.kTurnMotorInverted,
             DriveConstants.kFrontRightAngularOffset);
     private final SwerveModule m_rearLeft = new SwerveModule(
             ModulePosition.REAR_LEFT,
             DriveConstants.kRearLeftDriveMotorCanId,
             DriveConstants.kRearLeftTurnMotorCanId,
             DriveConstants.kRearLeftTurnEncoderCanId,
-            DriveConstants.kTurnMotorInverted,
             DriveConstants.kRearLeftAngularOffset);
     private final SwerveModule m_rearRight = new SwerveModule(
             ModulePosition.REAR_RIGHT,
             DriveConstants.kRearRightDriveMotorCanId,
             DriveConstants.kRearRightTurnMotorCanId,
             DriveConstants.kRearRightTurnEncoderCanId,
-            DriveConstants.kTurnMotorInverted,
             DriveConstants.kRearRightAngularOffset);
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     private boolean m_fieldRelative = DriveConstants.kFieldRelative;

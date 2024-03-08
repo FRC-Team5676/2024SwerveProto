@@ -20,12 +20,12 @@ public final class ModuleConstants {
     public static final double kDriveMotorFreeSpeedRps = kNeoFreeSpeedRpm / 60;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     public static final double kDriveWheelFreeSpeedRps = (kDriveMotorFreeSpeedRps * kWheelCircumferenceMeters)
-        / kMk4iL1DriveGearRatio;
+            / kMk4iL1DriveGearRatio;
 
     public static final double kDriveEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
-        / kMk4iL1DriveGearRatio; // meters
+            / kMk4iL1DriveGearRatio; // meters
     public static final double kDriveEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
-        / kMk4iL1DriveGearRatio) / 60.0; // meters per second
+            / kMk4iL1DriveGearRatio) / 60.0; // meters per second
 
     public static final double kDriveP = 0.04;
     public static final double kDriveI = 0;
@@ -36,28 +36,27 @@ public final class ModuleConstants {
 
     public static final IdleMode kDriveMotorIdleMode = IdleMode.kBrake;
 
-    // Invert the Drive encoder, since the output shaft rotates in the opposite direction of
-    // the drive motor in the mk4i module.
-    public static final boolean kDriveEncoderInverted = true;
-
+    // Invert the Drive encoder, since the output shaft rotates in the opposite
+    // direction of the drive motor in the mk4i module.
+    public static final boolean kDriveEncoderInverted = false;
 
     /* Turn */
     public static final double kTurnEncoderPositionFactor = (2 * Math.PI);
-    public static final double kTurnEncoderVelocityFactor = (2 * Math.PI);
+    public static final double kTurnEncoderVelocityFactor = (2 * Math.PI) / 60.0;
 
     public static final double kTurnEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurnEncoderPositionPIDMaxInput = kTurnEncoderPositionFactor; // radians
 
-    public static final double kTurnP = 1; //0.4 // -5
-    public static final double kTurnD = 0; //0
-    public static final double kTurnI = 0; //0
-    public static final double kTurnFF = 0; //1 / kMk4iL1TurnGearRatio;
+    public static final double kTurnP = 1;
+    public static final double kTurnD = 0;
+    public static final double kTurnI = 0;
+    public static final double kTurnFF = 0;
     public static final double kTurnMinOutput = -1;
     public static final double kTurnMaxOutput = 1;
 
     public static final IdleMode kTurnMotorIdleMode = IdleMode.kBrake;
 
-    // Invert the Turn encoder, since the output shaft rotates in the opposite direction of
-    // the steering motor in the mk4i module.
+    // Invert the Turn encoder, since the output shaft rotates in the opposite
+    // direction of the steering motor in the mk4i module.
     public static final boolean kTurnEncoderInverted = true;
 }

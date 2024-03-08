@@ -37,7 +37,6 @@ public class SwerveModule extends SubsystemBase {
                         int driveMotorCanChannel,
                         int turnMotorCanChannel,
                         int cancoderCanChannel,
-                        boolean turnMotorInverted,
                         double turnEncoderOffsetDeg) {
 
                 m_modulePosition = modulePosition;
@@ -70,9 +69,18 @@ public class SwerveModule extends SubsystemBase {
                 m_turnEncoder.setPositionConversionFactor(ModuleConstants.kTurnEncoderPositionFactor);
                 m_turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurnEncoderVelocityFactor);
 
-                // Invert the turning encoder, since the output shaft rotates in the opposite
-                // direction of the steering motor in the Module.
-                m_turnSparkMax.setInverted(turnMotorInverted);
+                // Invert encoder, since the output shaft rotates in the opposite
+                // direction of the motor in the Module.
+                m_driveSparkMax.setInverted(ModuleConstants.kDriveEncoderInverted);
+                m_turnSparkMax.setInverted(ModuleConstants.kTurnEncoderInverted);
+
+                // Enable PID wrap around for the turning motor. This will allow the PID
+                // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
+                // to 10 degrees will go through 0 rather than the other direction which is a
+                // longer route.
+                m_turnPIDController.setPositionPIDWrappingEnabled(true);
+                m_turnPIDController.setPositionPIDWrappingMinInput(0);
+                m_turnPIDController.setPositionPIDWrappingMaxInput(2 * Math.PI);
 
                 // Set the PID gains for the driving motor
                 m_drivePIDController.setP(ModuleConstants.kDriveP);
@@ -100,12 +108,17 @@ public class SwerveModule extends SubsystemBase {
                 m_driveSparkMax.burnFlash();
                 m_turnSparkMax.burnFlash();
 
+                // Set current state and position
                 m_turnEncoderOffsetDeg = turnEncoderOffsetDeg;
-
                 m_driveEncoder.setPosition(0);
+                m_currentState.speedMetersPerSecond = 0;
+                m_currentState.angle = new Rotation2d(m_turnEncoder.getPosition());
+                m_currentPosition = new SwerveModulePosition(0, m_currentState.angle);
 
+                // Check CAN Operation
                 checkCAN();
 
+                // Setup Shuffleboard
                 ShuffleboardContent.initDriveShuffleboard(this);
                 ShuffleboardContent.initTurnShuffleboard(this);
                 ShuffleboardContent.initBooleanShuffleboard(this);
