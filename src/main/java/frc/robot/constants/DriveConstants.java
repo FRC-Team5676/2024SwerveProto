@@ -9,11 +9,6 @@ public final class DriveConstants {
     public static final boolean kTurnMotorInverted = true;
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = 0;
-    public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kRearLeftChassisAngularOffset = 0;
-    public static final double kRearRightChassisAngularOffset = 0;
-
     public static final double kFrontLeftAngularOffset = 302.9;
     public static final double kFrontRightAngularOffset = 308.2;
     public static final double kRearLeftAngularOffset = 321.1;
