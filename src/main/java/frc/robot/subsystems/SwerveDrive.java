@@ -16,6 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI;
@@ -78,7 +79,16 @@ public class SwerveDrive extends SubsystemBase {
                     m_rearRight.getPosition()
             });
 
+    // Test DIO
+    public DigitalInput m_testInput = new DigitalInput(0);
+
     public SwerveDrive() {
+        SwerveModuleState swerveModuleState = new SwerveModuleState(0, new Rotation2d(0));
+        m_frontLeft.setDesiredState(swerveModuleState);
+        m_frontRight.setDesiredState(swerveModuleState);
+        m_rearLeft.setDesiredState(swerveModuleState);
+        m_rearRight.setDesiredState(swerveModuleState);
+
         AutoBuilder.configureHolonomic(
                 this::getPose,
                 this::resetPose,

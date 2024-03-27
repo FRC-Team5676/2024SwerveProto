@@ -18,42 +18,42 @@ import frc.robot.commands.auto.AutoRoutines;
 
 public class RobotContainer {
   // Autonomous manager import
-  private final AutonManager autonManager = new AutonManager();
+  private final AutonManager m_autonManager = new AutonManager();
 
   // The driver's controller
-  private final CommandJoystick driver = new CommandJoystick(1);
+  private final CommandJoystick m_driver = new CommandJoystick(1);
 
   // The robot's subsystems
-  private final SwerveDrive swerve = new SwerveDrive();
+  private final SwerveDrive m_swerve = new SwerveDrive();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     addAutonomousChoices();
-    autonManager.displayChoices();
+    m_autonManager.displayChoices();
 
     configureButtonBindings();
   }
 
   public Command getAutonomousCommand() {
-    return autonManager.getSelected();
+    return m_autonManager.getSelected();
   }
 
   private void addAutonomousChoices() {
-    autonManager.addDefaultOption("Shoot Note and Leave",
-        AutoRoutines.ShootNoteAndLeave(swerve));
+    m_autonManager.addDefaultOption("Shoot Note and Leave",
+        AutoRoutines.ShootNoteAndLeave(m_swerve));
   }
 
   private void configureButtonBindings() {
-    swerve.setDefaultCommand(
+    m_swerve.setDefaultCommand(
         new TeleopSwerveCommand(
-            swerve,
-            () -> MathUtil.applyDeadband(driver.getY(), DriveConstants.kXYDeadband),
-            () -> MathUtil.applyDeadband(driver.getX(), DriveConstants.kXYDeadband),
-            () -> MathUtil.applyDeadband(driver.getZ(), DriveConstants.kRotationDeadband)));
+            m_swerve,
+            () -> MathUtil.applyDeadband(m_driver.getY(), DriveConstants.kXYDeadband),
+            () -> MathUtil.applyDeadband(m_driver.getX(), DriveConstants.kXYDeadband),
+            () -> MathUtil.applyDeadband(m_driver.getZ(), DriveConstants.kRotationDeadband)));
 
-    driver.button(1).onTrue(new InstantCommand(swerve::toggleFieldRelative));
-    driver.button(8).onTrue(new InstantCommand(swerve::zeroGyro));
+    m_driver.button(1).onTrue(new InstantCommand(m_swerve::toggleFieldRelative));
+    m_driver.button(8).onTrue(new InstantCommand(m_swerve::zeroGyro));
   }
 }

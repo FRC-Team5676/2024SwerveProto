@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -20,12 +22,15 @@ public class SwerveModule extends SubsystemBase {
         public final CANSparkMax m_driveSparkMax;
         public final CANSparkMax m_turnSparkMax;
         public final RelativeEncoder m_driveEncoder;
-        public final AbsoluteEncoder m_turnEncoder;
+        public final CANcoder m_turnCANcoder;
+        public final RelativeEncoder m_turnEncoder;
         public final double m_turnEncoderOffsetDeg;
+        public final double m_turnAngleCorrectionRad;
         public final ModulePosition m_modulePosition;
 
         public boolean m_driveMotorConnected;
         public boolean m_turnMotorConnected;
+        public boolean m_turnCoderConnected;
 
         private SwerveModulePosition m_currentPosition = new SwerveModulePosition();
         private SwerveModuleState m_currentState = new SwerveModuleState();
@@ -49,9 +54,17 @@ public class SwerveModule extends SubsystemBase {
                 m_driveSparkMax.restoreFactoryDefaults();
                 m_turnSparkMax.restoreFactoryDefaults();
 
+                // turn absolute encoder setup
+                m_turnEncoderOffsetDeg = turnEncoderOffsetDeg;
+                m_turnCANcoder = new CANcoder(cancoderCanChannel);
+                CANcoderConfiguration canConfig = new CANcoderConfiguration();
+                canConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+                canConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
+                m_turnCANcoder.getConfigurator().apply(canConfig);
+
                 // Setup encoders and PID controllers for the driving and turning SPARKS MAX.
                 m_driveEncoder = m_driveSparkMax.getEncoder();
-                m_turnEncoder = m_turnSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
+                m_turnEncoder = m_turnSparkMax.getEncoder();
                 m_drivePIDController = m_driveSparkMax.getPIDController();
                 m_turnPIDController = m_turnSparkMax.getPIDController();
                 m_drivePIDController.setFeedbackDevice(m_driveEncoder);
@@ -108,31 +121,29 @@ public class SwerveModule extends SubsystemBase {
                 m_driveSparkMax.burnFlash();
                 m_turnSparkMax.burnFlash();
 
-                // Set current state and position
-                m_turnEncoderOffsetDeg = turnEncoderOffsetDeg;
-                m_driveEncoder.setPosition(0);
-                m_currentState.speedMetersPerSecond = 0;
-                m_currentState.angle = new Rotation2d(m_turnEncoder.getPosition());
-                m_currentPosition = new SwerveModulePosition(0, m_currentState.angle);
+                // Calc Relative Encoder Correction
+                m_turnAngleCorrectionRad = Math.abs(getAbsolutePositionRad());
 
-                // Check CAN Operation
+                m_driveEncoder.setPosition(0);
+
                 checkCAN();
 
-                // Setup Shuffleboard
                 ShuffleboardContent.initDriveShuffleboard(this);
                 ShuffleboardContent.initTurnShuffleboard(this);
+                ShuffleboardContent.initCANCoderShuffleboard(this);
                 ShuffleboardContent.initBooleanShuffleboard(this);
+                ShuffleboardContent.initCoderBooleanShuffleboard(this);
         }
 
         public void setDesiredState(SwerveModuleState desiredState) {
                 // Apply chassis angular offset to the desired state.
                 SwerveModuleState correctedDesiredState = new SwerveModuleState();
                 correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-                correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromDegrees(m_turnEncoderOffsetDeg));
+                correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_turnAngleCorrectionRad));
 
                 // Optimize the reference state to avoid spinning further than 90 degrees.
                 SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
-                                new Rotation2d(m_turnEncoder.getPosition()));
+                                new Rotation2d(m_turnEncoder.getPosition() + m_turnAngleCorrectionRad));
 
                 // Command driving and turning SPARKS MAX towards their respective setpoints.
                 m_drivePIDController.setReference(optimizedDesiredState.speedMetersPerSecond,
@@ -158,15 +169,25 @@ public class SwerveModule extends SubsystemBase {
         private boolean checkCAN() {
                 m_driveMotorConnected = m_driveSparkMax.getFirmwareVersion() != 0;
                 m_turnMotorConnected = m_turnSparkMax.getFirmwareVersion() != 0;
+                m_turnCoderConnected = m_turnCANcoder.getDeviceID() != 0;
 
-                return m_driveMotorConnected && m_turnMotorConnected;
-        }
-
-        public double getRawPositionRad() {
-                return m_turnEncoder.getPosition();
+                return m_driveMotorConnected && m_turnMotorConnected && m_turnCoderConnected;
         }
 
         public double getAbsolutePositionRad() {
-                return m_turnEncoder.getPosition() - Units.degreesToRadians(m_turnEncoderOffsetDeg);
+                double absPosRad = Units.rotationsToRadians(m_turnCANcoder.getAbsolutePosition().getValueAsDouble());
+                absPosRad -= Units.degreesToRadians(m_turnEncoderOffsetDeg);
+                return absPosRad;
+        }
+
+        public double getTurnPositionRad() {
+                double conv = 0;
+                double fullPosDeg = Units.radiansToDegrees(m_turnEncoder.getPosition() + m_turnAngleCorrectionRad);
+
+                if (fullPosDeg < 0)
+                        conv = 360;
+
+                double posDeg = conv + fullPosDeg % 360;
+                return Units.degreesToRadians(posDeg);
         }
 }
