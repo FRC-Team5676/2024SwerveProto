@@ -102,7 +102,7 @@ public class ShuffleboardContent {
                                 .withSize(1, 1);
                 drLayout1.addNumber("Pitch", () -> sd.getPitch()).withPosition(3, 1)
                                 .withSize(1, 1);
-                drLayout1.addBoolean("Test DIO", () -> sd.m_testInput.get()).withPosition(1, 1)
+                drLayout1.addBoolean("Test DIO", () -> sd.m_testInput.get()).withPosition(1, 2)
                                 .withSize(1, 1);
         }
 }
