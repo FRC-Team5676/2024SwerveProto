@@ -25,8 +25,8 @@ public final class DriveConstants {
     public static final int kRearRightTurnMotorCanId = 24;
 
     // Spark MAX Turn Encoder CAN IDs
-    public static final int kFrontLeftTurnEncoderCanId = 42;
-    public static final int kFrontRightTurnEncoderCanId = 41;
+    public static final int kFrontLeftTurnEncoderCanId = 41;
+    public static final int kFrontRightTurnEncoderCanId = 42;
     public static final int kRearLeftTurnEncoderCanId = 43;
     public static final int kRearRightTurnEncoderCanId = 44;
 
