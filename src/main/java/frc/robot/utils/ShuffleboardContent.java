@@ -98,7 +98,7 @@ public class ShuffleboardContent {
 
                 coderLayout.addNumber("AbsPosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getAbsolutePosition().getValueAsDouble()));
                 coderLayout.addNumber("AbsOffsetDeg" + abrev, () -> sm.m_turnEncoderOffsetDeg);
-                coderLayout.addNumber("PosDeg" + abrev, () -> Units.rotationsToDegrees(sm.m_turnCANcoder.getPosition().getValueAsDouble()));
+                coderLayout.addNumber("PosDeg" + abrev, () -> Units.radiansToDegrees(sm.m_turnEncoder.getPosition()));
                 coderLayout.addNumber("VelocityRps" + abrev, () -> sm.m_turnCANcoder.getVelocity().getValueAsDouble());
         }
 

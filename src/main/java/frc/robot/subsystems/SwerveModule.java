@@ -114,7 +114,7 @@ public class SwerveModule extends SubsystemBase {
                 m_turnSparkMax.burnFlash();
 
                 // Calc Relative Encoder Correction
-                m_turnAngleCorrectionRad = Math.abs(getAbsolutePositionRad());
+                m_turnAngleCorrectionRad = getAbsolutePositionRad();
 
                 m_driveEncoder.setPosition(0);
 
@@ -131,7 +131,7 @@ public class SwerveModule extends SubsystemBase {
                 // Apply chassis angular offset to the desired state.
                 SwerveModuleState correctedDesiredState = new SwerveModuleState();
                 correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-                correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_turnAngleCorrectionRad));
+                correctedDesiredState.angle = desiredState.angle.minus(Rotation2d.fromRadians(m_turnAngleCorrectionRad));
 
                 // Optimize the reference state to avoid spinning further than 90 degrees.
                 SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
@@ -174,7 +174,7 @@ public class SwerveModule extends SubsystemBase {
 
         public double getTurnPositionRad() {
                 double conv = 0;
-                double fullPosDeg = Units.radiansToDegrees(m_turnEncoder.getPosition() + m_turnAngleCorrectionRad);
+                double fullPosDeg = Units.radiansToDegrees(m_turnEncoder.getPosition() - m_turnAngleCorrectionRad);
 
                 if (fullPosDeg < 0)
                         conv = 360;

@@ -83,6 +83,12 @@ public class SwerveDrive extends SubsystemBase {
             });
 
     public SwerveDrive() {
+        SwerveModuleState zeroState = new SwerveModuleState(0, new Rotation2d(0));
+        m_frontLeft.setDesiredState(zeroState);
+        m_frontRight.setDesiredState(zeroState);
+        m_rearLeft.setDesiredState(zeroState);
+        m_rearRight.setDesiredState(zeroState);
+        
         AutoBuilder.configureHolonomic(
                 this::getPose,
                 this::resetPose,
