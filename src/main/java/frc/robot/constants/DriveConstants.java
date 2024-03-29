@@ -14,10 +14,10 @@ public final class DriveConstants {
     public static final double kRearLeftChassisAngularOffset = 0;
     public static final double kRearRightChassisAngularOffset = 0;
 
-    public static final double kFrontLeftAngularOffset = 302.9;
-    public static final double kFrontRightAngularOffset = 308.2;
-    public static final double kRearLeftAngularOffset = 321.1;
-    public static final double kRearRightAngularOffset = 187.0;
+    public static final double kFrontLeftAngularOffset = 123.6;
+    public static final double kFrontRightAngularOffset = 134.2;
+    public static final double kRearLeftAngularOffset = 138.3;
+    public static final double kRearRightAngularOffset = 8.5;
 
     // Spark MAX Drive Motor CAN IDs
     public static final int kFrontLeftDriveMotorCanId = 32;
@@ -32,8 +32,8 @@ public final class DriveConstants {
     public static final int kRearRightTurnMotorCanId = 24;
 
     // Spark MAX Turn Encoder CAN IDs
-    public static final int kFrontLeftTurnEncoderCanId = 42;
-    public static final int kFrontRightTurnEncoderCanId = 41;
+    public static final int kFrontLeftTurnEncoderCanId = 41;
+    public static final int kFrontRightTurnEncoderCanId = 42;
     public static final int kRearLeftTurnEncoderCanId = 43;
     public static final int kRearRightTurnEncoderCanId = 44;
 
