@@ -16,6 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI;
@@ -82,6 +83,9 @@ public class SwerveDrive extends SubsystemBase {
                     m_rearRight.getPosition()
             });
 
+    private DigitalInput noteSensor = new DigitalInput(0);
+    public boolean noteDetected = false;
+
     public SwerveDrive() {
         SwerveModuleState zeroState = new SwerveModuleState(0, new Rotation2d(0));
         m_frontLeft.setDesiredState(zeroState);
@@ -115,6 +119,7 @@ public class SwerveDrive extends SubsystemBase {
     public void periodic() {
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getAngle()), getPositions());
+        noteDetected = noteSensor.get();
     }
 
     public Pose2d getPose() {

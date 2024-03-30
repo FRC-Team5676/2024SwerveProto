@@ -111,5 +111,7 @@ public class ShuffleboardContent {
                                 .withSize(1, 1);
                 drLayout1.addNumber("Pitch", () -> sd.getPitch()).withPosition(3, 1)
                                 .withSize(1, 1);
+                drLayout1.addBoolean("Note Present", () -> sd.noteDetected).withPosition(1, 2)
+                                .withSize(1, 1);
         }
 }
